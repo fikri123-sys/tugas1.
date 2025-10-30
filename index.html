@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>coffe_mardupi</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <i class="fas fa-coffee"></i> COFFE_MARDUPI
+  </header>
+
+  <main class="container">
+    <!-- MODUL MENU -->
+    <section id="modul-menu" class="modul">
+      <h2><i class="fas fa-utensils"></i> Menu Coffe Mardupi</h2>
+      
+      <div class="menu-tabs">
+        <button class="menu-tab" data-tab="makanan">
+          <i class="fas fa-utensils"></i> Makanan
+        </button>
+        <button class="menu-tab" data-tab="minuman">
+          <i class="fas fa-coffee"></i> Minuman
+        </button>
+        <button class="menu-tab" data-tab="kopi">
+          <i class="fas fa-mug-hot"></i> Kopi Spesial
+        </button>
+      </div>
+      
+      <!-- Menu Makanan -->
+      <div class="menu-content active" id="makanan-content">
+        <div class="menu-list" id="menu-makanan">
+          <!-- Menu makanan items will be populated by JavaScript -->
+        </div>
+      </div>
+      
+      <!-- Menu Minuman -->
+      <div class="menu-content" id="minuman-content">
+        <div class="menu-list" id="menu-minuman">
+          <!-- Menu minuman items will be populated by JavaScript -->
+        </div>
+      </div>
+      
+      <!-- Menu Kopi Spesial -->
+      <div class="menu-content" id="kopi-content">
+        <div class="menu-list" id="menu-kopi">
+          <!-- Menu kopi items will be populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- MODUL KERANJANG -->
+    <section id="modul-keranjang" class="modul">
+      <h2><i class="fas fa-shopping-cart"></i> Keranjang Belanja</h2>
+      <div class="status-indicator">
+        <div class="status-step active">
+          <div class="status-dot">1</div>
+          <div class="status-label">Keranjang</div>
+        </div>
+        <div class="status-step">
+          <div class="status-dot">2</div>
+          <div class="status-label">Checkout</div>
+        </div>
+        <div class="status-step">
+          <div class="status-dot">3</div>
+          <div class="status-label">Pembayaran</div>
+        </div>
+        <div class="status-step">
+          <div class="status-dot">4</div>
+          <div class="status-label">Selesai</div>
+        </div>
+      </div>
+      
+      <div id="cart-items">
+        <!-- Cart items will be populated by JavaScript -->
+      </div>
+      
+      <div class="empty-state" id="empty-cart">
+        <i class="fas fa-shopping-cart"></i>
+        <p>Keranjang belanja Anda kosong</p>
+        <p>Silakan pilih makanan atau minuman dari menu</p>
+      </div>
+      
+      <p class="total">Total: Rp <span id="total">0</span></p>
+      
+      <div class="cart-actions">
+        <button id="clear-cart" class="clear-cart-btn">
+          <i class="fas fa-trash"></i> Kosongkan Keranjang
+        </button>
+        <button id="lanjut-checkout" class="secondary">
+          <i class="fas fa-arrow-right"></i> Lanjut ke Checkout
+        </button>
+      </div>
+    </section>
+
+    <!-- MODUL CHECKOUT -->
+    <section id="modul-checkout" class="modul" style="display:none;">
+      <h2><i class="fas fa-clipboard-list"></i> Checkout</h2>
+      <div class="status-indicator">
+        <div class="status-step completed">
+          <div class="status-dot"><i class="fas fa-check"></i></div>
+          <div class="status-label">Keranjang</div>
+        </div>
+        <div class="status-step active">
+          <div class="status-dot">2</div>
+          <div class="status-label">Checkout</div>
+        </div>
+        <div class="status-step">
+          <div class="status-dot">3</div>
+          <div class="status-label">Pembayaran</div>
+        </div>
+        <div class="status-step">
+          <div class="status-dot">4</div>
+          <div class="status-label">Selesai</div>
+        </div>
+      </div>
+      <form id="checkout-form">
+        <label for="nama">Nama Pelanggan:</label>
+        <input type="text" id="nama" required placeholder="Masukkan nama lengkap">
+        
+        <label for="alamat">Alamat Pengiriman:</label>
+        <textarea id="alamat" required placeholder="Masukkan alamat lengkap untuk pengiriman" rows="3"></textarea>
+        
+        <label for="metode-pembayaran">Metode Pembayaran:</label>
+        <select id="metode-pembayaran" required>
+          <option value="">-- Pilih Metode --</option>
+          <option value="Transfer Bank">Transfer Bank</option>
+          <option value="Kartu Kredit">Kartu Kredit</option>
+          <option value="E-Wallet">E-Wallet (OVO, Gopay, Dana)</option>
+          <option value="COD">Bayar di Tempat (COD)</option>
+        </select>
+        
+        <button type="submit" class="accent">
+          <i class="fas fa-credit-card"></i> Proses Pembayaran
+        </button>
+      </form>
+    </section>
+
+    <!-- MODUL PEMBAYARAN -->
+    <section id="modul-pembayaran" class="modul" style="display:none;">
+      <h2><i class="fas fa-money-bill-wave"></i> Pembayaran</h2>
+      <div class="status-indicator">
+        <div class="status-step completed">
+          <div class="status-dot"><i class="fas fa-check"></i></div>
+          <div class="status-label">Keranjang</div>
+        </div>
+        <div class="status-step completed">
+          <div class="status-dot"><i class="fas fa-check"></i></div>
+          <div class="status-label">Checkout</div>
+        </div>
+        <div class="status-step active">
+          <div class="status-dot">3</div>
+          <div class="status-label">Pembayaran</div>
+        </div>
+        <div class="status-step">
+          <div class="status-dot">4</div>
+          <div class="status-label">Selesai</div>
+        </div>
+      </div>
+      <div id="info-pembayaran">
+        <!-- Payment info will be populated by JavaScript -->
+      </div>
+      <button id="lanjut-dapur" class="secondary">
+        <i class="fas fa-utensils"></i> Konfirmasi & Kirim ke Dapur
+      </button>
+    </section>
+
+    <!-- MODUL DAPUR -->
+    <section id="modul-dapur" class="modul" style="display:none;">
+      <h2><i class="fas fa-utensils"></i> Proses Dapur</h2>
+      <div class="status-indicator">
+        <div class="status-step completed">
+          <div class="status-dot"><i class="fas fa-check"></i></div>
+          <div class="status-label">Keranjang</div>
+        </div>
+        <div class="status-step completed">
+          <div class="status-dot"><i class="fas fa-check"></i></div>
+          <div class="status-label">Checkout</div>
+        </div>
+        <div class="status-step completed">
+          <div class="status-dot"><i class="fas fa-check"></i></div>
+          <div class="status-label">Pembayaran</div>
+        </div>
+        <div class="status-step active">
+          <div class="status-dot">4</div>
+          <div class="status-label">Selesai</div>
+        </div>
+      </div>
+      <div class="empty-state">
+        <i class="fas fa-chef-hat"></i>
+        <p>Pesanan sedang diproses di dapur...</p>
+        <p>Silakan tunggu, makanan & minuman Anda akan segera siap</p>
+      </div>
+      <button id="lanjut-pengiriman" class="accent">
+        <i class="fas fa-truck"></i> Lanjut ke Pengiriman
+      </button>
+    </section>
+
+    <!-- MODUL PENGIRIMAN -->
+    <section id="modul-pengiriman" class="modul" style="display:none;">
+      <h2><i class="fas fa-truck"></i> Pengiriman</h2>
+      <div class="status-indicator">
+        <div class="status-step completed">
+          <div class="status-dot"><i class="fas fa-check"></i></div>
+          <div class="status-label">Keranjang</div>
+        </div>
+        <div class="status-step completed">
+          <div class="status-dot"><i class="fas fa-check"></i></div>
+          <div class="status-label">Checkout</div>
+        </div>
+        <div class="status-step completed">
+          <div class="status-dot"><i class="fas fa-check"></i></div>
+          <div class="status-label">Pembayaran</div>
+        </div>
+        <div class="status-step completed">
+          <div class="status-dot"><i class="fas fa-check"></i></div>
+          <div class="status-label">Selesai</div>
+        </div>
+      </div>
+      <div id="info-pengiriman">
+        <!-- Delivery info will be populated by JavaScript -->
+      </div>
+      <button id="selesai" class="secondary">
+        <i class="fas fa-check-circle"></i> Selesaikan Pesanan
+      </button>
+    </section>
+
+    <!-- MODUL DATABASE -->
+    <section id="modul-database" class="modul">
+      <h2><i class="fas fa-database"></i> Riwayat Pesanan</h2>
+      <div id="riwayat">
+        <!-- Order history will be populated by JavaScript -->
+      </div>
+      <div class="empty-state" id="empty-history">
+        <i class="fas fa-history"></i>
+        <p>Belum ada riwayat pesanan</p>
+        <p>Pesanan yang telah selesai akan muncul di sini</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal Edit Item -->
+  <div id="edit-modal" class="edit-modal">
+    <div class="edit-modal-content">
+      <h3><i class="fas fa-edit"></i> Edit Item Keranjang</h3>
+      <form id="edit-form">
+        <input type="hidden" id="edit-item-id">
+        <div class="edit-form-group">
+          <label for="edit-item-name">Nama Item:</label>
+          <input type="text" id="edit-item-name" readonly>
+        </div>
+        <div class="edit-form-group">
+          <label for="edit-item-price">Harga per Item:</label>
+          <input type="number" id="edit-item-price" readonly>
+        </div>
+        <div class="edit-form-group">
+          <label for="edit-item-quantity">Jumlah:</label>
+          <input type="number" id="edit-item-quantity" min="1" max="20" required>
+        </div>
+        <div class="edit-form-group">
+          <label for="edit-item-catatan">Catatan (Opsional):</label>
+          <textarea id="edit-item-catatan" placeholder="Contoh: Tidak pedas, tambah gula, es batu, dll." rows="3"></textarea>
+        </div>
+        <div class="edit-modal-buttons">
+          <button type="button" id="cancel-edit" class="cancel-btn">
+            <i class="fas fa-times"></i> Batal
+          </button>
+          <button type="submit" class="secondary">
+            <i class="fas fa-save"></i> Simpan Perubahan
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Coffe Mardupi | Coffee & Food Excellence | ig: coffee_mardupi
+  </footer>
+  <script src="style.js"></script>
+</body>
+</html>
